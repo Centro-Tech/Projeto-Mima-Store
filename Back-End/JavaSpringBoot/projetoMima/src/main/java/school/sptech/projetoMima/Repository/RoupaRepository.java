@@ -1,4 +1,11 @@
 package school.sptech.projetoMima.Repository;
 
-public interface RoupaRepository {
+import org.springframework.data.repository.CrudRepository;
+import school.sptech.projetoMima.Model.Roupa;
+
+import java.util.List;
+
+public interface RoupaRepository extends CrudRepository<Roupa, Integer> {
+   List<Roupa> findByNomeContainingIgnoreCase(String nome);
+   Boolean existsByCodigoIdentificacao(String codigoIdentificacao);
 }
