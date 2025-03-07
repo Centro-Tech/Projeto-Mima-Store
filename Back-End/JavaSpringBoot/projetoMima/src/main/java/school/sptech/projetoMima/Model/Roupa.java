@@ -15,6 +15,7 @@ public class Roupa {
     private String cor;
     private double preco;
     private int quantidade;
+    private Boolean vendido;
 
     public Roupa() {}
 
@@ -72,5 +73,13 @@ public class Roupa {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public Boolean getVendido() {
+        return vendido;
+    }
+
+    public void setVendido(Boolean vendido) {
+        this.vendido = vendido;
     }
 }
