@@ -13,8 +13,8 @@ public class Roupa {
     private String nome;
     private String tamanho;
     private String cor;
-    private double preco;
-    private int quantidade;
+    private Double preco;
+    private Integer quantidade;
     private Boolean vendido;
 
     public Roupa() {}
@@ -59,19 +59,19 @@ public class Roupa {
         this.cor = cor;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public void setPreco(double preco) {
+    public void setPreco(Double preco) {
         this.preco = preco;
     }
 
-    public int getQuantidade() {
+    public Integer getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(int quantidade) {
+    public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
 

@@ -58,16 +58,17 @@
         }
 
         @PutMapping("/{id}")
-        public ResponseEntity<Roupa> venderRoupa(@PathVariable int id, @RequestParam Roupa roupa) {
+        public ResponseEntity<Roupa> venderRoupa(@PathVariable int id, @RequestBody Roupa roupa) {
             Roupa roupaExistente = roupaRepository.findById(id).orElse(null);
             if (roupaExistente == null) {
                 return ResponseEntity.status(404).body(null);
             }
-            if (roupaExistente.getQuantidade() > roupa.getQuantidade()) {
-                roupaExistente.setQuantidade(roupa.getQuantidade());
+            if (roupa.getQuantidade() != null && roupaExistente.getQuantidade() >= roupa.getQuantidade()) {
+                roupaExistente.setQuantidade(roupaExistente.getQuantidade() - roupa.getQuantidade());
             }
-            if (roupaExistente.getVendido()) {
-                roupaExistente.setVendido(false);
+
+            if (roupa.getVendido() != null) {
+                roupaExistente.setVendido(roupa.getVendido());
             }
 
             roupaRepository.save(roupaExistente);
