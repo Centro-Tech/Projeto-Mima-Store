@@ -34,6 +34,17 @@ public class FuncionarioController {
             funcionarios = funcionarioRepository.findFuncionarioByTelefoneContainingIgnoreCase(valor);
         }
 
+
+        if (funcionarios.isEmpty()) {
+            Integer id = Integer.valueOf(valor);
+            for(Funcionario funcionario : funcionarioRepository.findAll()) {
+                if(funcionario.getId().equals(id)) {
+                    funcionarios.add(funcionario);
+                }
+
+            }
+        }
+
         if (funcionarios.isEmpty()) {
             return ResponseEntity.status(404).build();
         }
@@ -63,6 +74,8 @@ public class FuncionarioController {
 
        if(funcionario.getTelefone() != null) {
            funcionarioExistente.setTelefone(funcionario.getTelefone());
+       }else {
+           return ResponseEntity.status(404).build();
        }
 
        funcionarioRepository.save(funcionarioExistente);
