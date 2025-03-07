@@ -84,6 +84,7 @@
             }
 
             String nomeRoupa = roupa.getNome().toUpperCase();
+            String tamanhoRoupa = roupa.getTamanho().toUpperCase();
 
             String codigoIdentificacao = null;
 
@@ -151,7 +152,7 @@
             int numeroAleatorio = 1000000 + random.nextInt(9000000);
 
 
-            String codigoFinal = codigoIdentificacao + numeroAleatorio;
+            String codigoFinal = codigoIdentificacao + numeroAleatorio + tamanhoRoupa;
 
             roupa.setCodigoIdentificacao(codigoFinal);
 
