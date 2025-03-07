@@ -37,7 +37,7 @@ public class ProprietarioSocioController {
 
         if(proprietarioSocios.isEmpty()){
             for (ProprietarioSocio pessoa : proprietarioSocioRepository.findAll()) {
-                if(pessoa.getNome().equalsIgnoreCase(valor)){
+                if(String.valueOf(pessoa.getId()).equals(valor)){
                     proprietarioSocios.add(pessoa);
                 }
             }

@@ -38,7 +38,7 @@ public class FuncionarioController {
         if (funcionarios.isEmpty()) {
             Integer id = Integer.valueOf(valor);
             for(Funcionario funcionario : funcionarioRepository.findAll()) {
-                if(funcionario.getId().equals(id)) {
+                if(String.valueOf(funcionario.getId()).equals(valor)) {
                     funcionarios.add(funcionario);
                 }
 
