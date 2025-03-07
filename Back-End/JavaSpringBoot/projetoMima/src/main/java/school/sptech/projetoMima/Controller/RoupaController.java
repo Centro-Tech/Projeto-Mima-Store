@@ -17,27 +17,22 @@
         @Autowired
         private RoupaRepository roupaRepository;
 
-        @GetMapping("/{nome}")
-        public ResponseEntity<List<Roupa>> buscarPorNome(@RequestParam String nome) {
-            List<Roupa> roupas = roupaRepository.findByNomeContainingIgnoreCase(nome);
+        @GetMapping("/{nomeOuCodigo}")
+        public ResponseEntity<List<Roupa>> buscarPorNomeOuCodigo(@PathVariable String nomeOuCodigo){
+            List<Roupa> roupa = new ArrayList<>();
+            roupa = roupaRepository.findByNomeContainingIgnoreCase(nomeOuCodigo);
 
-            if (roupas.isEmpty()) {
-                return ResponseEntity.status(404).body(null);
+            if(roupa.isEmpty()){
+                roupa = roupaRepository.findCodigoIdentificacaoContainingIgnoreCase(nomeOuCodigo);
             }
 
-            return ResponseEntity.ok(roupas);
-        }
-
-        @GetMapping("/{codigo}")
-        public ResponseEntity<List<Roupa>> buscarPorCodigo(@RequestParam String codigoIdentificacao) {
-            List<Roupa> roupas = roupaRepository.findCodigoIdentificacaoContainingIgnoreCase(codigoIdentificacao);
-
-            if (roupas.isEmpty()) {
+            if(roupa.isEmpty()){
                 return ResponseEntity.status(404).body(null);
+            }else {
+                return ResponseEntity.ok(roupa);
             }
-
-            return ResponseEntity.ok(roupas);
         }
+
 
 
         @GetMapping("/estoque")
