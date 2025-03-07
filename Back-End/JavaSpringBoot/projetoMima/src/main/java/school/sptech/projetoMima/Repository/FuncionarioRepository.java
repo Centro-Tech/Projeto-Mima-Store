@@ -10,5 +10,5 @@ public interface FuncionarioRepository extends CrudRepository<Funcionario, Integ
     List<Funcionario> findFuncionarioByCargoContainingIgnoreCase(String cargo);
     List<Funcionario> findFuncionarioByEmailContainingIgnoreCase(String email);
     List<Funcionario> findFuncionarioByTelefoneContainingIgnoreCase(String telefone);
-    Integer findFuncionarioById(Integer id);
+    Boolean findFuncionarioByEmail(String email);
 }

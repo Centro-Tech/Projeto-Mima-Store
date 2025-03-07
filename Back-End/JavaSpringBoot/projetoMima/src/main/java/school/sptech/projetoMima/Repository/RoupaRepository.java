@@ -6,9 +6,8 @@ import school.sptech.projetoMima.Model.Roupa;
 import java.util.List;
 
 public interface RoupaRepository extends CrudRepository<Roupa, Integer> {
-   List<Roupa> findByNomeContainingIgnoreCase(String nome);
+   List<Roupa> findRoupaByNomeContainingIgnoreCase(String nome);
    Boolean existsByCodigoIdentificacao(String codigoIdentificacao);
-   List<Roupa> findCodigoIdentificacaoContainingIgnoreCase(String codigoIdentificacao);
-
+   List<Roupa> findRoupaByCodigoIdentificacaoContainingIgnoreCase(String codigoIdentificacao);
 
 }

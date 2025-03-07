@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.projetoMima.Model.Roupa;
 import school.sptech.projetoMima.Repository.FuncionarioRepository;
-import school.sptech.projetoMima.Model.Funcionario; // Supondo que você tenha essa classe no pacote Model
+import school.sptech.projetoMima.Model.Funcionario;
 import school.sptech.projetoMima.Repository.RoupaRepository;
 
 import java.util.ArrayList;
@@ -19,43 +19,28 @@ public class FuncionarioController {
     private FuncionarioRepository funcionarioRepository;
 
 
-    @GetMapping("/{nome}")
-    public ResponseEntity<List<Funcionario>> listarFuncionarios(@RequestParam String nome) {
-        List<Funcionario> funcionarios = funcionarioRepository.findFuncionarioByNomeContainingIgnoreCase(nome);
+    @GetMapping("/{valor}")
+    public ResponseEntity<List<Funcionario>> listarFuncionarios(@PathVariable String valor) {
+        List<Funcionario> funcionarios = funcionarioRepository.findFuncionarioByEmailContainingIgnoreCase(valor);
         if (funcionarios.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            funcionarios = funcionarioRepository.findFuncionarioByNomeContainingIgnoreCase(valor);
         }
-        return ResponseEntity.ok(funcionarios);
 
-    }
-
-    @GetMapping("/{cargo}")
-    public ResponseEntity<List<Funcionario>> listarFuncionariosCargo(@RequestParam String cargo) {
-        List<Funcionario> funcionarios = funcionarioRepository.findFuncionarioByCargoContainingIgnoreCase(cargo);
         if (funcionarios.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            funcionarios = funcionarioRepository.findFuncionarioByCargoContainingIgnoreCase(valor);
         }
-        return ResponseEntity.ok(funcionarios);
-    }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<List<Funcionario>> listarFuncionariosEmail(@RequestParam String email) {
-        List<Funcionario> funcionarios = funcionarioRepository.findFuncionarioByEmailContainingIgnoreCase(email);
         if (funcionarios.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            funcionarios = funcionarioRepository.findFuncionarioByTelefoneContainingIgnoreCase(valor);
+        }
+
+        if (funcionarios.isEmpty()) {
+            return ResponseEntity.status(404).build();
         }
 
         return ResponseEntity.ok(funcionarios);
     }
 
-    @GetMapping("/{telefone}")
-    public ResponseEntity<List<Funcionario>> listarFuncionariosTelefone(@RequestParam String telefone) {
-        List<Funcionario> funcionarios = funcionarioRepository.findFuncionarioByTelefoneContainingIgnoreCase(telefone);
-        if(funcionarios.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(funcionarios);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> atualizarFuncionario(@RequestBody Funcionario funcionario, @PathVariable int id) {
@@ -81,7 +66,27 @@ public class FuncionarioController {
        }
 
        funcionarioRepository.save(funcionarioExistente);
-       return ResponseEntity.status(200).body("Funcionário atualizado com sucesso");
+       return ResponseEntity.status(200).build();
+    }
+
+    @PostMapping
+    public ResponseEntity<String> inserirFuncionario(@RequestBody Funcionario funcionario) {
+        if(funcionarioRepository.findFuncionarioByEmail(funcionario.getEmail()) != null) {
+            return ResponseEntity.status(404).build();
+        }
+
+        funcionarioRepository.save(funcionario);
+        return ResponseEntity.status(200).build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarFuncionario(@PathVariable int id) {
+        if(funcionarioRepository.existsById(id)) {
+            funcionarioRepository.deleteById(id);
+            return ResponseEntity.status(204).build();
+        }else {
+            return ResponseEntity.status(404).build();
+        }
     }
 
 

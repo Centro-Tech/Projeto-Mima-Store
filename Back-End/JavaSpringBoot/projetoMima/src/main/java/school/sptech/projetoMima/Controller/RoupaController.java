@@ -20,10 +20,10 @@
         @GetMapping("/{nomeOuCodigo}")
         public ResponseEntity<List<Roupa>> buscarPorNomeOuCodigo(@PathVariable String nomeOuCodigo){
             List<Roupa> roupa = new ArrayList<>();
-            roupa = roupaRepository.findByNomeContainingIgnoreCase(nomeOuCodigo);
+            roupa = roupaRepository.findRoupaByNomeContainingIgnoreCase(nomeOuCodigo);
 
             if(roupa.isEmpty()){
-                roupa = roupaRepository.findCodigoIdentificacaoContainingIgnoreCase(nomeOuCodigo);
+                roupa = roupaRepository.findRoupaByCodigoIdentificacaoContainingIgnoreCase(nomeOuCodigo);
             }
 
             if(roupa.isEmpty()){
