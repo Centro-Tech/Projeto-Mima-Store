@@ -84,61 +84,61 @@
 
             String codigoIdentificacao = null;
 
-            if ("BERMUDA".equals(nomeRoupa)) {
+            if (nomeRoupa.contains("BERMUDA")) {
                 codigoIdentificacao = "BZ";
-            } else if ("BLAZER".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("BLAZER")) {
                 codigoIdentificacao = "BL";
-            } else if ("BLUSA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("BLUSA")) {
                 codigoIdentificacao = "BL";
-            } else if ("BRACELETE".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("BRACELETE")) {
                 codigoIdentificacao = "BR";
-            } else if ("BRINCO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("BRINCO")) {
                 codigoIdentificacao = "BC";
-            } else if ("CALÇA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("CALÇA")) {
                 codigoIdentificacao = "CL";
-            } else if ("CAMISA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("CAMISA")) {
                 codigoIdentificacao = "CA";
-            } else if ("CAMISETA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("CAMISETA")) {
                 codigoIdentificacao = "BL";
-            } else if ("CARDIGAN".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("CARDIGAN")) {
                 codigoIdentificacao = "TR";
-            } else if ("CHEMISE".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("CHEMISE")) {
                 codigoIdentificacao = "CH";
-            } else if ("COLAR".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("COLAR")) {
                 codigoIdentificacao = "CR";
-            } else if ("CONJUNTO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("CONJUNTO")) {
                 codigoIdentificacao = "CO";
-            } else if ("CROPPED".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("CROPPED")) {
                 codigoIdentificacao = "BL";
-            } else if ("ELASTICO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("ELASTICO")) {
                 codigoIdentificacao = "EL";
-            } else if ("JAQUETA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("JAQUETA")) {
                 codigoIdentificacao = "JA";
-            } else if ("LENÇO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("LENÇO")) {
                 codigoIdentificacao = "LE";
-            } else if ("MACACÃO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("MACACÃO")) {
                 codigoIdentificacao = "MA";
-            } else if ("MACAQUINHO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("MACAQUINHO")) {
                 codigoIdentificacao = "MA";
-            } else if ("PARKA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("PARKA")) {
                 codigoIdentificacao = "PK";
-            } else if ("PONCHO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("PONCHO")) {
                 codigoIdentificacao = "TR";
-            } else if ("PULSEIRA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("PULSEIRA")) {
                 codigoIdentificacao = "PU";
-            } else if ("REGATA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("REGATA")) {
                 codigoIdentificacao = "BL";
-            } else if ("SAIA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("SAIA")) {
                 codigoIdentificacao = "SA";
-            } else if ("SHORT".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("SHORT")) {
                 codigoIdentificacao = "SH";
-            } else if ("TOMARA QUE CAIA".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("TOMARA QUE CAIA")) {
                 codigoIdentificacao = "BL";
-            } else if ("TRICOT".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("TRICOT")) {
                 codigoIdentificacao = "TR";
-            } else if ("T-SHIRT".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("T-SHIRT")) {
                 codigoIdentificacao = "BL";
-            } else if ("VESTIDO".equals(nomeRoupa)) {
+            } else if (nomeRoupa.contains("VESTIDO")) {
                 codigoIdentificacao = "VE";
             } else {
                 return ResponseEntity.status(400).body(null);
@@ -146,7 +146,6 @@
 
             Random random = new Random();
             int numeroAleatorio = 1000000 + random.nextInt(9000000);
-
 
             String codigoFinal = codigoIdentificacao + numeroAleatorio + tamanhoRoupa;
 
