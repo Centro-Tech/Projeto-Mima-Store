@@ -63,13 +63,13 @@
             if (roupaExistente == null) {
                 return ResponseEntity.status(404).body(null);
             }
-            if (roupa.getQuantidade() != null && roupaExistente.getQuantidade() >= roupa.getQuantidade()) {
+            if (roupa.getQuantidade() != null && roupa.getQuantidade() > 0 && roupaExistente.getQuantidade() >= roupa.getQuantidade()) {
                 roupaExistente.setQuantidade(roupaExistente.getQuantidade() - roupa.getQuantidade());
+            }else {
+                return ResponseEntity.status(404).body(null);
             }
 
-            if (roupa.getVendido() != null) {
-                roupaExistente.setVendido(roupa.getVendido());
-            }
+            roupaExistente.setVendido(true);
 
             roupaRepository.save(roupaExistente);
             return ResponseEntity.ok(roupaExistente);
