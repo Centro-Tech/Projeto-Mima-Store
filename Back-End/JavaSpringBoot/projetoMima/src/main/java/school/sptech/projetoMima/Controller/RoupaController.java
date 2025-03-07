@@ -150,6 +150,7 @@
             Random random = new Random();
             int numeroAleatorio = 1000000 + random.nextInt(9000000);
 
+
             String codigoFinal = codigoIdentificacao + numeroAleatorio;
 
             roupa.setCodigoIdentificacao(codigoFinal);

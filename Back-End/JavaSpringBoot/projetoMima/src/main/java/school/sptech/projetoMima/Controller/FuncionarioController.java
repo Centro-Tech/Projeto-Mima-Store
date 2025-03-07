@@ -57,55 +57,35 @@ public class FuncionarioController {
         return ResponseEntity.ok(funcionarios);
     }
 
-    @PutMapping("/{id}/{nome}")
-    public ResponseEntity<Funcionario> atualizarNomeFuncionario(@PathVariable Integer id,@PathVariable String nome, @RequestParam Funcionario funcionario) {
-        Integer funcionarioExistente = funcionarioRepository.findFuncionarioById(id);
-        if (funcionarioExistente == null) {
-            return ResponseEntity.notFound().build();
-        }
-        funcionario.setNome(nome);
-
-        return ResponseEntity.ok(funcionarioRepository.save(funcionario));
-    }
-
-    @PutMapping("/{id}/{cargo}")
-    public ResponseEntity<String> atualizarCargoFuncionario(@PathVariable Integer id, @PathVariable String cargo) {
+    @PutMapping("/{id}")
+    public ResponseEntity<String> atualizarFuncionario(@RequestBody Funcionario funcionario, @PathVariable int id) {
         Funcionario funcionarioExistente = funcionarioRepository.findById(id).orElse(null);
-
         if (funcionarioExistente == null) {
             return ResponseEntity.status(404).body("Funcionário não encontrado");
         }
 
-        funcionarioExistente.setCargo(cargo);
-        funcionarioRepository.save(funcionarioExistente);
-
-        return ResponseEntity.ok("Cargo atualizado com sucesso");
-    }
-
-
-    @PutMapping("{id}/{email}")
-    public ResponseEntity<String> atualizarEmailFuncionario(@PathVariable Integer id, @PathVariable String email) {
-        Funcionario funcionarioExistente = funcionarioRepository.findById(id).orElse(null);
-        if (funcionarioExistente == null) {
-            return ResponseEntity.notFound().build();
+        if(funcionario.getNome() != null) {
+            funcionarioExistente.setNome(funcionario.getNome());
         }
-        funcionarioExistente.setEmail(email);
-        funcionarioRepository.save(funcionarioExistente);
-        return ResponseEntity.ok("Email atualizado com sucesso");
-    }
 
-    @PutMapping("{id}/{telefone}")
-    public ResponseEntity<String> atualizarTelefone(@PathVariable Integer id, @PathVariable String telefone) {
-        Funcionario funcionarioExistente = funcionarioRepository.findById(id).orElse(null);
-        if (funcionarioExistente == null) {
-            return ResponseEntity.notFound().build();
+        if(funcionario.getCargo() != null) {
+            funcionarioExistente.setCargo(funcionario.getCargo());
         }
-        funcionarioExistente.setTelefone(telefone);
-        funcionarioRepository.save(funcionarioExistente);
-        return ResponseEntity.ok("Telefone atualizado com sucesso");
+
+       if(funcionario.getEmail() != null) {
+           funcionarioExistente.setEmail(funcionario.getEmail());
+       }
+
+       if(funcionario.getTelefone() != null) {
+           funcionarioExistente.setTelefone(funcionario.getTelefone());
+       }
+
+       funcionarioRepository.save(funcionarioExistente);
+       return ResponseEntity.status(200).body("Funcionário atualizado com sucesso");
     }
 
-    
+
+
 
 
 
