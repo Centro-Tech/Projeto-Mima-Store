@@ -48,19 +48,19 @@ public class ProprietarioSocioController {
 
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Funcionario>> listarFuncionario() {
-        List <Funcionario> funcionarios = new ArrayList<>();
+    public ResponseEntity<List<ProprietarioSocio>> listarProprietarios() {
+        List<ProprietarioSocio> proprietarios = new ArrayList<>();
 
-        for(Funcionario f : funcionarioRepository.findAll()){
-            funcionarios.add(f);
+        for(ProprietarioSocio p : proprietarioSocioRepository.findAll()){
+            proprietarios.add(p);
         }
 
-        if(funcionarios.isEmpty()){
+        if(proprietarios.isEmpty()){
             return ResponseEntity.status(404).build();
         }
-
-        return ResponseEntity.status(200).body(funcionarios);
+        return ResponseEntity.status(200).body(proprietarios);
     }
+
 
 
     @PutMapping("/{id}")
@@ -89,7 +89,7 @@ public class ProprietarioSocioController {
         }
 
         proprietarioSocioRepository.save(pessoaExistente);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(201).body(pessoaExistente);
 
 
     }
@@ -102,7 +102,7 @@ public class ProprietarioSocioController {
         }
 
         proprietarioSocioRepository.save(proprietarioSocio);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(201).body(proprietarioSocio);
     }
 
 
