@@ -18,6 +18,8 @@ public class ProprietarioSocioController {
 
     @Autowired
     private ProprietarioSocioRepository proprietarioSocioRepository;
+    @Autowired
+    private FuncionarioRepository funcionarioRepository;
 
 
     @GetMapping("/{valor}")
@@ -44,15 +46,22 @@ public class ProprietarioSocioController {
         return ResponseEntity.ok(proprietarioSocios);
     }
 
-    @PostMapping
-    public ResponseEntity<ProprietarioSocio> cadastrar(@RequestBody ProprietarioSocio proprietarioSocio) {
-        if(proprietarioSocio == null){
-            ResponseEntity.status(400).build();
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Funcionario>> listarFuncionario() {
+        List <Funcionario> funcionarios = new ArrayList<>();
+
+        for(Funcionario f : funcionarioRepository.findAll()){
+            funcionarios.add(f);
         }
 
-        proprietarioSocioRepository.save(proprietarioSocio);
-        return ResponseEntity.status(200).build();
+        if(funcionarios.isEmpty()){
+            return ResponseEntity.status(404).build();
+        }
+
+        return ResponseEntity.status(200).body(funcionarios);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<ProprietarioSocio> atualizarDados(@RequestBody ProprietarioSocio proprietarioSocio, @PathVariable int id) {
@@ -84,6 +93,18 @@ public class ProprietarioSocioController {
 
 
     }
+
+
+    @PostMapping
+    public ResponseEntity<ProprietarioSocio> cadastrar(@RequestBody ProprietarioSocio proprietarioSocio) {
+        if(proprietarioSocio == null){
+            ResponseEntity.status(400).build();
+        }
+
+        proprietarioSocioRepository.save(proprietarioSocio);
+        return ResponseEntity.status(200).build();
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ProprietarioSocio> excluir(@PathVariable int id) {
