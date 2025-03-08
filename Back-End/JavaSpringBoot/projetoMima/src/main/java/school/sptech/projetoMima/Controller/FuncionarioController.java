@@ -21,86 +21,94 @@ public class FuncionarioController {
 
     @GetMapping("/{valor}")
     public ResponseEntity<List<Funcionario>> listarFuncionarios(@PathVariable String valor) {
-        List<Funcionario> funcionarios = funcionarioRepository.findFuncionarioByEmailContainingIgnoreCase(valor);
-        if (funcionarios.isEmpty()) {
-            funcionarios = funcionarioRepository.findFuncionarioByNomeContainingIgnoreCase(valor);
-        }
+        List<Funcionario> funcionarios = funcionarioRepository.findFuncionarioByNomeContainingIgnoreCase(valor);
 
         if (funcionarios.isEmpty()) {
             funcionarios = funcionarioRepository.findFuncionarioByCargoContainingIgnoreCase(valor);
         }
 
-        if (funcionarios.isEmpty()) {
-            funcionarios = funcionarioRepository.findFuncionarioByTelefoneContainingIgnoreCase(valor);
-        }
-
-
-        if (funcionarios.isEmpty()) {
-            Integer id = Integer.valueOf(valor);
-            for(Funcionario funcionario : funcionarioRepository.findAll()) {
-                if(String.valueOf(funcionario.getId()).equals(valor)) {
-                    funcionarios.add(funcionario);
-                }
-
-            }
+        if(funcionarios.isEmpty()){
+            funcionarios = funcionarioRepository.findFuncionarioById(Integer.valueOf(valor));
         }
 
         if (funcionarios.isEmpty()) {
             return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.ok(funcionarios);
+        return ResponseEntity.status(200).body(funcionarios);
     }
+
+    @GetMapping("/listar")
+    public ResponseEntity<List<Funcionario>> listarFuncionarios() {
+        List<Funcionario> funcionarios = new ArrayList<>();
+       for(Funcionario funcionario : funcionarioRepository.findAll()){
+           funcionarios.add(funcionario);
+       }
+
+       if(funcionarios.isEmpty()){
+           return ResponseEntity.status(404).build();
+       }else {
+           return ResponseEntity.status(200).body(funcionarios);
+       }
+    }
+
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> atualizarFuncionario(@RequestBody Funcionario funcionario, @PathVariable int id) {
+    public ResponseEntity<Funcionario> atualizarFuncionario(@RequestBody Funcionario funcionario, @PathVariable int id) {
         Funcionario funcionarioExistente = funcionarioRepository.findById(id).orElse(null);
         if (funcionarioExistente == null) {
-            return ResponseEntity.status(404).body("Funcionário não encontrado");
-        }
-
-        if(funcionario.getNome() != null) {
-            funcionarioExistente.setNome(funcionario.getNome());
-        }
-
-        if(funcionario.getCargo() != null) {
-            funcionarioExistente.setCargo(funcionario.getCargo());
-        }
-
-       if(funcionario.getEmail() != null) {
-           funcionarioExistente.setEmail(funcionario.getEmail());
-       }
-
-       if(funcionario.getTelefone() != null) {
-           funcionarioExistente.setTelefone(funcionario.getTelefone());
-       }else {
-           return ResponseEntity.status(404).build();
-       }
-
-       funcionarioRepository.save(funcionarioExistente);
-       return ResponseEntity.status(200).build();
-    }
-
-    @PostMapping
-    public ResponseEntity<String> inserirFuncionario(@RequestBody Funcionario funcionario) {
-        if(funcionarioRepository.findFuncionarioByEmail(funcionario.getEmail()) != null) {
             return ResponseEntity.status(404).build();
         }
 
-        funcionarioRepository.save(funcionario);
-        return ResponseEntity.status(200).build();
+        if (funcionario.getNome() != null) {
+            funcionarioExistente.setNome(funcionario.getNome());
+        }
+        if (funcionario.getCargo() != null) {
+            funcionarioExistente.setCargo(funcionario.getCargo());
+        }
+        if (funcionario.getEmail() != null) {
+            funcionarioExistente.setEmail(funcionario.getEmail());
+        }
+        if (funcionario.getTelefone() != null) {
+            funcionarioExistente.setTelefone(funcionario.getTelefone());
+        }
+
+        Funcionario funcionarioNovo = funcionarioRepository.save(funcionarioExistente);
+
+        return ResponseEntity.status(201).body(funcionarioNovo);
     }
+
+
+    @PostMapping
+    public ResponseEntity<Funcionario> inserirFuncionario(@RequestBody Funcionario funcionario) {
+
+        if (funcionario.getEmail() == null || funcionario.getTelefone() == null) {
+            return ResponseEntity.status(404).build();
+        }
+
+        if (funcionarioRepository.existsByEmail(funcionario.getEmail())) {
+            return ResponseEntity.status(400).build();
+        }
+
+        if (funcionarioRepository.existsByTelefone(funcionario.getTelefone())) {
+            return ResponseEntity.status(400).build();
+        }
+
+        Funcionario novoFuncionario = funcionarioRepository.save(funcionario);
+        return ResponseEntity.status(201).body(novoFuncionario);
+    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarFuncionario(@PathVariable int id) {
-        if(funcionarioRepository.existsById(id)) {
+        if (funcionarioRepository.existsById(id)) {
             funcionarioRepository.deleteById(id);
             return ResponseEntity.status(204).build();
-        }else {
-            return ResponseEntity.status(404).build();
         }
+        return ResponseEntity.status(404).build();
     }
+
 
 
 
