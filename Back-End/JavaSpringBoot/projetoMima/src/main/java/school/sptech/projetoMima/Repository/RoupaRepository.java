@@ -18,4 +18,6 @@ public interface RoupaRepository extends CrudRepository<Roupa, Integer> {
    List<Roupa> findRoupaByCorContainingIgnoreCase(String cor);
 
    List<Roupa> findRoupaByPreco(Double preco);
+
+   List<Roupa> findRoupaByCodigoIdentificacaoIgnoreCase(String valor);
 }

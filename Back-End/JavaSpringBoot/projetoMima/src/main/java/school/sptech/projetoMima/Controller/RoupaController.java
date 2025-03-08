@@ -18,36 +18,25 @@
         private RoupaRepository roupaRepository;
 
         @GetMapping("/{valor}")
-        public ResponseEntity<List<Roupa>> buscarPorNomeOuCodigo(@PathVariable String valor){
-            List<Roupa> roupa = new ArrayList<>();
-            roupa = roupaRepository.findRoupaByNomeContainingIgnoreCase(valor);
+        public ResponseEntity<List<Roupa>> buscarPorNomeOuCodigo(@PathVariable String valor) {
+            List<Roupa> roupas = roupaRepository.findRoupaByCodigoIdentificacaoIgnoreCase(valor);
 
-            if(roupa.isEmpty()){
-                roupa = roupaRepository.findRoupaByCodigoIdentificacaoContainingIgnoreCase(valor);
+            if (roupas.isEmpty()) {
+                roupas = roupaRepository.findRoupaById(Integer.valueOf(valor));
             }
 
-            if(roupa.isEmpty()){
-                roupa = roupaRepository.findRoupaByTamanho(valor);
+            if (roupas.isEmpty()) {
+                roupas = roupaRepository.findRoupaByNomeContainingIgnoreCase(valor);
             }
 
-            if(roupa.isEmpty()){
-                roupa = roupaRepository.findRoupaByCorContainingIgnoreCase(valor);
+
+            if (roupas.isEmpty()) {
+                return ResponseEntity.status(404).build();
             }
 
-            if(roupa.isEmpty()){
-               roupa = roupaRepository.findRoupaByPreco(Double.valueOf(valor));
-            }
-
-            if(roupa.isEmpty()){
-               roupa = roupaRepository.findRoupaById(Integer.valueOf(valor));
-            }
-
-            if(roupa.isEmpty()){
-                return ResponseEntity.status(404).body(null);
-            }else {
-                return ResponseEntity.ok(roupa);
-            }
+            return ResponseEntity.status(200).body(roupas);
         }
+
 
 
 

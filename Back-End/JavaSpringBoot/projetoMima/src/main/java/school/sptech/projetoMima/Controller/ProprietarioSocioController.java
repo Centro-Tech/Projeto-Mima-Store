@@ -34,7 +34,7 @@ public class ProprietarioSocioController {
 
         if(proprietarioSocios.isEmpty()){
           proprietarioSocios = proprietarioSocioRepository.findProprietarioSocioById(Integer.valueOf(valor));
-          
+
         }
 
         if(proprietarioSocios.isEmpty()){
