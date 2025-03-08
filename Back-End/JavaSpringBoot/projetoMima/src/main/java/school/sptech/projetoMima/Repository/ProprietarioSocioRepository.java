@@ -11,6 +11,6 @@ public interface ProprietarioSocioRepository extends JpaRepository<ProprietarioS
     List<ProprietarioSocio> findProprietarioSocioByNomeContainingIgnoreCase(String nome);
 
     List<ProprietarioSocio> findProprietarioSocioByPapelContainingIgnoreCase(String papel);
-    List<ProprietarioSocio> findProprietarioSocioByCpfContainingIgnoreCase(String cpf);
     List<ProprietarioSocio> findProprietarioSocioByEmailContainingIgnoreCase(String email);
+    List<ProprietarioSocio> findProprietarioSocioById(Integer id);
 }

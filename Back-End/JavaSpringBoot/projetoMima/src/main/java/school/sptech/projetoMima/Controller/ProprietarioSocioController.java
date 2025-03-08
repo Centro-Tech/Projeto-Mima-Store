@@ -31,18 +31,10 @@ public class ProprietarioSocioController {
         if(proprietarioSocios.isEmpty()){
             proprietarioSocios = proprietarioSocioRepository.findProprietarioSocioByEmailContainingIgnoreCase(valor);
         }
-        if(proprietarioSocios.isEmpty()){
-            proprietarioSocios = proprietarioSocioRepository.findProprietarioSocioByCpfContainingIgnoreCase(valor);
-        }
 
         if(proprietarioSocios.isEmpty()){
-            for (ProprietarioSocio pessoa : proprietarioSocioRepository.findAll()) {
-                if(String.valueOf(pessoa.getId()).equals(valor)){
-                    proprietarioSocios.add(pessoa);
-                }
-            }
-
-
+          proprietarioSocios = proprietarioSocioRepository.findProprietarioSocioById(Integer.valueOf(valor));
+          
         }
 
         if(proprietarioSocios.isEmpty()){

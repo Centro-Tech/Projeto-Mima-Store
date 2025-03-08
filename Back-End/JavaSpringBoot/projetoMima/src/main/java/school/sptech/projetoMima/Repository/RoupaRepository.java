@@ -10,4 +10,12 @@ public interface RoupaRepository extends CrudRepository<Roupa, Integer> {
    Boolean existsByCodigoIdentificacao(String codigoIdentificacao);
    List<Roupa> findRoupaByCodigoIdentificacaoContainingIgnoreCase(String codigoIdentificacao);
 
+   List<Roupa> findRoupaById(Integer id);
+
+
+   List<Roupa> findRoupaByTamanho(String tamanho);
+
+   List<Roupa> findRoupaByCorContainingIgnoreCase(String cor);
+
+   List<Roupa> findRoupaByPreco(Double preco);
 }
