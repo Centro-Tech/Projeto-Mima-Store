@@ -6,6 +6,7 @@
     import school.sptech.projetoMima.Model.Roupa;
     import school.sptech.projetoMima.Repository.RoupaRepository;
 
+    import java.time.LocalDate;
     import java.util.ArrayList;
     import java.util.List;
     import java.util.Random;
@@ -57,6 +58,20 @@
             return ResponseEntity.status(404).body(null);
         }
 
+        @GetMapping("/filtro-data-venda")
+        public ResponseEntity<List<Roupa>> buscarFiltroData(
+                @RequestParam("inicio") LocalDate inicio,
+                @RequestParam("fim") LocalDate fim
+        ) {
+            List<Roupa> filtroData = roupaRepository.findRoupaByDataVendaBetween(inicio, fim);
+            if (filtroData.isEmpty()) {
+                return ResponseEntity.status(404).build();
+            }
+            return ResponseEntity.ok(filtroData);
+
+
+        }
+
         @PutMapping("/{id}")
         public ResponseEntity<Roupa> venderRoupa(@PathVariable int id, @RequestBody Roupa roupa) {
             Roupa roupaExistente = roupaRepository.findById(id).orElse(null);
@@ -71,6 +86,7 @@
 
 
             roupaExistente.setVendido(true);
+            roupaExistente.setDataVenda(LocalDate.now());
 
             roupaRepository.save(roupaExistente);
             return ResponseEntity.ok(roupaExistente);
@@ -87,6 +103,7 @@
 
             String nomeRoupa = roupa.getNome().toUpperCase();
             String tamanhoRoupa = roupa.getTamanho().toUpperCase();
+
 
             String codigoIdentificacao = null;
 
@@ -156,6 +173,7 @@
             String codigoFinal = codigoIdentificacao + numeroAleatorio + tamanhoRoupa;
 
             roupa.setCodigoIdentificacao(codigoFinal);
+            roupa.setDataRegistro(LocalDate.now());
 
             Roupa novaRoupa = roupaRepository.save(roupa);
 

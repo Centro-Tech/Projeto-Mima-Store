@@ -40,12 +40,12 @@ public class FornecedorController {
         return  ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/filtro-data")
-    public ResponseEntity<List<Fornecedor>> filtrarPorData(
+    @GetMapping("/filtro-data-registro")
+    public ResponseEntity<List<Fornecedor>> filtrarPorDataRegistro(
             @RequestParam("inicio") LocalDate inicio,
             @RequestParam("fim") LocalDate fim) {
 
-        List<Fornecedor> fornecedores = fornecedorRepository.findByDataRegistroBetween(inicio, fim);
+        List<Fornecedor> fornecedores = fornecedorRepository.findFornecedorByDataRegistroBetween(inicio, fim);
 
         if (fornecedores.isEmpty()) {
             return ResponseEntity.notFound().build();
