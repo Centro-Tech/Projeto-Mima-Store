@@ -1,6 +1,8 @@
 package school.sptech.projetoMima.Model;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -18,6 +20,8 @@ public class Fornecedor {
 
     @OneToMany(mappedBy = "fornecedor")
     private List<Roupa> roupas;
+
+    private LocalDate dataRegistro;
 
 
     public Integer getId() {

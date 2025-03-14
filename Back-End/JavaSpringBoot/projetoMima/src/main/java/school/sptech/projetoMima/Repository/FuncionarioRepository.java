@@ -10,4 +10,5 @@ public interface FuncionarioRepository extends CrudRepository<Funcionario, Integ
     boolean existsByEmail(String email);
 
     boolean existsByTelefone(String telefone);
+
 }
