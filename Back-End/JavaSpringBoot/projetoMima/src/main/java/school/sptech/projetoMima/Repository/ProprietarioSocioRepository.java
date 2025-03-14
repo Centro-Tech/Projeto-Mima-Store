@@ -8,9 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ProprietarioSocioRepository extends JpaRepository<ProprietarioSocio, Integer> {
-    List<ProprietarioSocio> findProprietarioSocioByNomeContainingIgnoreCase(String nome);
 
-    List<ProprietarioSocio> findProprietarioSocioByPapelContainingIgnoreCase(String papel);
-    List<ProprietarioSocio> findProprietarioSocioByEmailContainingIgnoreCase(String email);
-    List<ProprietarioSocio> findProprietarioSocioById(Integer id);
 }
