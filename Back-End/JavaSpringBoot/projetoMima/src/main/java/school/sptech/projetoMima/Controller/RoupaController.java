@@ -3,12 +3,15 @@
     import org.springframework.beans.factory.annotation.Autowired;
     import org.springframework.http.ResponseEntity;
     import org.springframework.web.bind.annotation.*;
+    import school.sptech.projetoMima.Model.Fornecedor;
     import school.sptech.projetoMima.Model.Roupa;
+    import school.sptech.projetoMima.Repository.FornecedorRepository;
     import school.sptech.projetoMima.Repository.RoupaRepository;
 
     import java.time.LocalDate;
     import java.util.ArrayList;
     import java.util.List;
+    import java.util.Optional;
     import java.util.Random;
 
     @RestController
@@ -17,6 +20,9 @@
 
         @Autowired
         private RoupaRepository roupaRepository;
+
+        @Autowired
+        private FornecedorRepository fornecedorRepository;
 
         @GetMapping("/{valor}")
         public ResponseEntity<List<Roupa>> buscarPorNomeOuCodigo(@PathVariable String valor) {
@@ -174,6 +180,15 @@
 
             roupa.setCodigoIdentificacao(codigoFinal);
             roupa.setDataRegistro(LocalDate.now());
+
+            Optional<Fornecedor> fornecedor = fornecedorRepository.findById(roupa.getFornecedor().getId());
+            if (!fornecedor.isPresent()) {
+                return ResponseEntity.status(404).body(null);
+            }
+
+            Fornecedor fornecedorExistente = fornecedor.get();
+            roupa.setFornecedor(fornecedorExistente);
+
 
             Roupa novaRoupa = roupaRepository.save(roupa);
 
