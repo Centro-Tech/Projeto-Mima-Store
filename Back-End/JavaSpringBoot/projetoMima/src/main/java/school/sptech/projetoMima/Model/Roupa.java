@@ -17,7 +17,9 @@ public class Roupa {
     private Integer quantidade;
     private Boolean vendido;
 
-    public Roupa() {}
+    @ManyToOne
+    @JoinColumn(name = "fornecedor_id")
+    private Fornecedor fornecedor;
 
     public Integer getId() {
         return id;
@@ -81,5 +83,13 @@ public class Roupa {
 
     public void setVendido(Boolean vendido) {
         this.vendido = vendido;
+    }
+
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
     }
 }

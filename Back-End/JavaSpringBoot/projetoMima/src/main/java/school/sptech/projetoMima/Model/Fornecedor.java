@@ -1,29 +1,24 @@
 package school.sptech.projetoMima.Model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED) //para quando for herdar mais de 2 tablelas
-public abstract class  Usuario {
+public class Fornecedor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String nome;
+    private String cnpj;
     private String email;
     private String telefone;
+    private String endereco;
 
+    @OneToMany(mappedBy = "fornecedor")
+    private List<Roupa> roupas;
 
-    public Usuario(String nome, String email, String telefone) {
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-    }
-
-    public Usuario() {
-
-    }
 
     public Integer getId() {
         return id;
@@ -41,6 +36,14 @@ public abstract class  Usuario {
         this.nome = nome;
     }
 
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -55,5 +58,21 @@ public abstract class  Usuario {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<Roupa> getRoupas() {
+        return roupas;
+    }
+
+    public void setRoupas(List<Roupa> roupas) {
+        this.roupas = roupas;
     }
 }

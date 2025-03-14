@@ -69,6 +69,7 @@
                 return ResponseEntity.status(404).body(null);
             }
 
+
             roupaExistente.setVendido(true);
 
             roupaRepository.save(roupaExistente);
