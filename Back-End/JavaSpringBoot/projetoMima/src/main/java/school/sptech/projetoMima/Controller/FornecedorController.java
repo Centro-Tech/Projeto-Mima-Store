@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.projetoMima.Model.Fornecedor;
+import school.sptech.projetoMima.Model.Roupa;
 import school.sptech.projetoMima.Repository.FornecedorRepository;
 
 import java.time.LocalDate;
@@ -54,9 +55,24 @@ public class FornecedorController {
         return ResponseEntity.status(200).body(fornecedores);
     }
 
+    @GetMapping("/{id}/roupas")
+    public ResponseEntity<List<Roupa>> buscarRoupasFornecedor(@PathVariable int id) {
+        Optional<Fornecedor> fornecedor = fornecedorRepository.findById(id);
+        if (fornecedor.isPresent()) {
+            Fornecedor fornecedorNovo = fornecedor.get();
+            List<Roupa> roupas = fornecedorNovo.getRoupas();
+            if(roupas.isEmpty()){
+                return ResponseEntity.status(404).build();
+            }
+            return ResponseEntity.status(200).body(roupas);
+        }
+
+        return  ResponseEntity.notFound().build();
+    }
+
     @PostMapping
     public ResponseEntity<Fornecedor> cadastrar(@RequestBody Fornecedor fornecedor) {
-        if(fornecedorRepository.existsById(fornecedor.getId()) || fornecedorRepository.existsByCnpj(fornecedor.getCnpj())) {
+        if(fornecedorRepository.existsByCnpj(fornecedor.getCnpj())) {
             return ResponseEntity.badRequest().body(fornecedor);
         }
 

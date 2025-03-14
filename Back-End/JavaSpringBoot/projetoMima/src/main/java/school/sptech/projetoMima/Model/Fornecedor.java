@@ -1,5 +1,6 @@
 package school.sptech.projetoMima.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class Fornecedor {
     private String endereco;
 
     @OneToMany(mappedBy = "fornecedor")
+    @JsonIgnore
     private List<Roupa> roupas;
 
     private LocalDate dataRegistro;
