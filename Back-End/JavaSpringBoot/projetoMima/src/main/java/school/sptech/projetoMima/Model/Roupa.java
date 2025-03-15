@@ -19,9 +19,7 @@ public class Roupa {
     private Integer quantidade;
     private Boolean vendido;
 
-    @ManyToOne
-    @JoinColumn(name = "fornecedor_id")
-    private Fornecedor fornecedor;
+    private Integer fornecedorId;
 
     private LocalDate dataRegistro;
     private LocalDate dataVenda;
@@ -90,13 +88,6 @@ public class Roupa {
         this.vendido = vendido;
     }
 
-    public Fornecedor getFornecedor() {
-        return fornecedor;
-    }
-
-    public void setFornecedor(Fornecedor fornecedor) {
-        this.fornecedor = fornecedor;
-    }
 
     public LocalDate getDataRegistro() {
         return dataRegistro;
@@ -112,5 +103,13 @@ public class Roupa {
 
     public void setDataVenda(LocalDate dataVenda) {
         this.dataVenda = dataVenda;
+    }
+
+    public Integer getFornecedorId() {
+        return fornecedorId;
+    }
+
+    public void setFornecedorId(Integer fornecedorId) {
+        this.fornecedorId = fornecedorId;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.projetoMima.Model.Fornecedor;
 import school.sptech.projetoMima.Model.Roupa;
 import school.sptech.projetoMima.Repository.FornecedorRepository;
+import school.sptech.projetoMima.Repository.RoupaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +19,9 @@ public class FornecedorController {
 
     @Autowired
     private FornecedorRepository fornecedorRepository;
+
+    @Autowired
+    private RoupaRepository roupaRepository;
 
 
 
@@ -55,19 +59,15 @@ public class FornecedorController {
         return ResponseEntity.status(200).body(fornecedores);
     }
 
-    @GetMapping("/{id}/roupas")
-    public ResponseEntity<List<Roupa>> buscarRoupasFornecedor(@PathVariable int id) {
-        Optional<Fornecedor> fornecedor = fornecedorRepository.findById(id);
-        if (fornecedor.isPresent()) {
-            Fornecedor fornecedorNovo = fornecedor.get();
-            List<Roupa> roupas = fornecedorNovo.getRoupas();
-            if(roupas.isEmpty()){
-                return ResponseEntity.status(404).build();
-            }
-            return ResponseEntity.status(200).body(roupas);
+    @GetMapping("/{fornecedorId}/roupas")
+    public ResponseEntity<List<Roupa>> buscarRoupasPorFornecedor(@PathVariable Integer fornecedorId) {
+        List<Roupa> roupas = roupaRepository.findByFornecedorId(fornecedorId);
+
+        if (roupas.isEmpty()) {
+            return ResponseEntity.status(404).build();
         }
 
-        return  ResponseEntity.notFound().build();
+        return ResponseEntity.ok(roupas);
     }
 
     @PostMapping

@@ -14,4 +14,5 @@ public interface RoupaRepository extends CrudRepository<Roupa, Integer> {
    List<Roupa> findRoupaByCodigoIdentificacaoIgnoreCase(String valor);
 
     List<Roupa> findRoupaByDataVendaBetween(LocalDate inicio, LocalDate fim);
+    List<Roupa> findByFornecedorId(Integer fornecedorId);
 }

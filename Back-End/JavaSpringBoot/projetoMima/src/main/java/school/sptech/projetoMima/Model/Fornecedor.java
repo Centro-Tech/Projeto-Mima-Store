@@ -19,9 +19,6 @@ public class Fornecedor {
     private String telefone;
     private String endereco;
 
-    @OneToMany(mappedBy = "fornecedor")
-    @JsonIgnore
-    private List<Roupa> roupas;
 
     private LocalDate dataRegistro;
 
@@ -74,11 +71,4 @@ public class Fornecedor {
         this.endereco = endereco;
     }
 
-    public List<Roupa> getRoupas() {
-        return roupas;
-    }
-
-    public void setRoupas(List<Roupa> roupas) {
-        this.roupas = roupas;
-    }
 }

@@ -181,13 +181,13 @@
             roupa.setCodigoIdentificacao(codigoFinal);
             roupa.setDataRegistro(LocalDate.now());
 
-            Optional<Fornecedor> fornecedor = fornecedorRepository.findById(roupa.getFornecedor().getId());
+            Optional<Fornecedor> fornecedor = fornecedorRepository.findById(roupa.getFornecedorId());
             if (!fornecedor.isPresent()) {
                 return ResponseEntity.status(404).body(null);
             }
 
             Fornecedor fornecedorExistente = fornecedor.get();
-            roupa.setFornecedor(fornecedorExistente);
+            roupa.setFornecedorId(fornecedorExistente.getId());
 
 
             Roupa novaRoupa = roupaRepository.save(roupa);
