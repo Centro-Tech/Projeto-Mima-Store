@@ -24,24 +24,17 @@
         @Autowired
         private FornecedorRepository fornecedorRepository;
 
-        @GetMapping("/{valor}")
-        public ResponseEntity<List<Roupa>> buscarPorNomeOuCodigo(@PathVariable String valor) {
-            List<Roupa> roupas = roupaRepository.findRoupaByCodigoIdentificacaoIgnoreCase(valor);
+        @GetMapping("/{id}")
+        public ResponseEntity<Roupa> buscarPorNome(@PathVariable Integer id) {
+            Optional <Roupa> roupaExistente = roupaRepository.findById(id);
 
-            if (roupas.isEmpty()) {
-                roupas = roupaRepository.findRoupaById(Integer.valueOf(valor));
+            if(roupaExistente.isPresent()) {
+                Roupa roupaNova =roupaExistente.get();
+                return ResponseEntity.ok(roupaNova);
             }
 
-            if (roupas.isEmpty()) {
-                roupas = roupaRepository.findRoupaByNomeContainingIgnoreCase(valor);
-            }
+            return ResponseEntity.notFound().build();
 
-
-            if (roupas.isEmpty()) {
-                return ResponseEntity.status(404).build();
-            }
-
-            return ResponseEntity.status(200).body(roupas);
         }
 
 
